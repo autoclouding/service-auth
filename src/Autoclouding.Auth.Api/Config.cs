@@ -7,8 +7,15 @@ public class Config
     public AzureAd AzureAd { get; set; } = new();
     public string AuthApiUrl { get; set; } = default!;
     public string IssLocationApiUrl { get; set; } = default!;
+
+    public Github Github { get; set; } = new();
 }
 
+public class Github
+{
+    public string ApiUrl { get; set; } = default!;
+    public string Secret { get; set; } = default!;
+}
 public class AzureAd
 {
     public string Instance { get; set; } = default!;

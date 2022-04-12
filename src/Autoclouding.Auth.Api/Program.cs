@@ -41,6 +41,7 @@ builder.Services.AddCorsWithCustomizations(CorsPolicy);
 //    .ConfigureWarnings(w => w.Ignore(CoreEventId.RowLimitingOperationWithoutOrderByWarning))
 //    .EnableSensitiveDataLogging(true));
 
+builder.Services.AddHttpClient<GithubHttpClient>();
 builder.Services.AddHttpClient<IssHttpClient>();
 builder.Services.AddHttpClient<AuthHttpClient>();
 builder.Services.AddScoped<AutocloudingClaimsService>();
