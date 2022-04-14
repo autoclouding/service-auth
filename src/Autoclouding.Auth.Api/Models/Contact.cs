@@ -1,10 +1,11 @@
-namespace Autoclouding.Auth.Api;
+using System.Runtime.InteropServices;
+
+namespace Autoclouding.Auth.Api.Models;
 
 public class Contact
 {
+    public string Email { get; set; } = default!;
     public int Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Phone { get; set; }
+    public string Name { get; set; } = default!;
+    public string Phone { get; set; } = default!;
 }

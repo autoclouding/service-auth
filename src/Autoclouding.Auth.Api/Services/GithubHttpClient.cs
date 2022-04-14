@@ -32,9 +32,9 @@ public class GithubHttpClient
         _httpClient.BaseAddress = new Uri(options.Value.Github.ApiUrl);
     }
 
-    public async Task<GithubRepository> GetGithubRepositoryActionAsync()
+    public async Task<GithubRepository> GetGithubRepositoryActionAsync(string repositoryName)
     {
-        var response = await _httpClient.GetFromJsonAsync<GithubRepository>("/repos/autoclouding/dev-image");
+        var response = await _httpClient.GetFromJsonAsync<GithubRepository>($"/repos/autoclouding/{repositoryName}");
         return response ?? new GithubRepository();
     }
 }

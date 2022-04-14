@@ -11,18 +11,30 @@ namespace Autoclouding.Auth.Api.Controllers;
 public class GithubController : ControllerBase
 {
     private readonly GithubHttpClient _githubClient;
+    private readonly ILogger<GithubHttpClient> _logger;
 
-    public GithubController(GithubHttpClient githubClient)
+
+    public GithubController(GithubHttpClient githubClient, ILogger<GithubHttpClient> logger)
     {
         _githubClient = githubClient;
+        _logger = logger;
     }
 
     // Example: Allow anonymous access to this action (override default policy)
     [AllowAnonymous]
-    [HttpGet]
-    public async Task<ActionResult<GithubRepository>> Get()
+    [HttpGet("{respositoryName}")]
+    public async Task<ActionResult<GithubRepository>> Get(string respositoryName)
     {
-        var githubLocation = await _githubClient.GetGithubRepositoryActionAsync();
-        return Ok(githubLocation);
+        try
+        {
+            var githubLocation = await _githubClient.GetGithubRepositoryActionAsync(respositoryName);
+            return Ok(githubLocation);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "some error occured");
+            return BadRequest(exception.Message);
+            // throw new ArgumentException();
+        }
     }
 }

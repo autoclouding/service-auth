@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Identity.Web;
 using Autoclouding.Auth.Api.Services;
+using Microsoft.AspNetCore.Rewrite;
 
 const string CorsPolicy = nameof(CorsPolicy);
 var builder = WebApplication.CreateBuilder(args);
@@ -74,6 +75,7 @@ app.UseSwaggerUI(o =>
     o.EnablePersistAuthorization();
     o.OAuthClientId(startupConfig.AzureAd.ClientId);
     o.OAuthScopes($"{startupConfig.AzureAd.Audience}/{startupConfig.AzureAd.Scopes}");
+    // o.RoutePrefix = string.Empty;
     foreach (var description in provider.ApiVersionDescriptions)
     {
         o.SwaggerEndpoint(
@@ -82,6 +84,12 @@ app.UseSwaggerUI(o =>
     }
 });
 
+// redirect to swagger by default
+var option = new RewriteOptions();
+option.AddRedirect("^$", "swagger");
+app.UseRewriter(option);
+
+// redirect to https
 app.UseHttpsRedirection();
 
 app.UseCors(CorsPolicy);
